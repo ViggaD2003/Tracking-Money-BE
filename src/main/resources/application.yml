@@ -1,0 +1,18 @@
+spring:
+    application:
+        name: Tracking-Money
+
+    datasource:
+      url: jdbc:mysql://localhost:3306/tracking_money?allowPublicKeyRetrieval=true&useSSL=false
+      username: root
+      password: root
+
+    jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
+
+cloudinary:
+  cloud_name: dq6ar6ytd
+  api_key: 924796385639944
+  api_secret: zF_5C8pZd3m-q2NXsp7Ay96glI0
