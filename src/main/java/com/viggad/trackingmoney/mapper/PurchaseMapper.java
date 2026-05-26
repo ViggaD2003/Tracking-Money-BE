@@ -1,5 +1,6 @@
 package com.viggad.trackingmoney.mapper;
 import com.viggad.trackingmoney.dto.request.PurchaseRequest;
+import com.viggad.trackingmoney.dto.response.GetPurchaseResponse;
 import com.viggad.trackingmoney.dto.response.PurchaseResponse;
 import com.viggad.trackingmoney.model.Purchase;
 import org.mapstruct.*;
@@ -19,4 +20,5 @@ public abstract class PurchaseMapper {
 
     @Mapping(target = "categoryResponse", source = "category")
     public abstract PurchaseResponse toPurchaseRequest(Purchase purchase);
+
 }

@@ -1,6 +1,7 @@
 package com.viggad.trackingmoney.controller;
 
 import com.viggad.trackingmoney.dto.request.PurchaseRequest;
+import com.viggad.trackingmoney.dto.response.GetPurchaseResponse;
 import com.viggad.trackingmoney.service.inter.PurchaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,11 @@ public class PurchaseController {
         String response = purchaseService.createPurchase(file, purchase);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<GetPurchaseResponse> getAllPurchases(@RequestParam(name = "page")int page, @RequestParam(name = "size") int size) {
+        return ResponseEntity.ok(purchaseService.getAllPurchases(page, size));
     }
 
 

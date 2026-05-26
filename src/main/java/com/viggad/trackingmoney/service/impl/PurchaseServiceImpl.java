@@ -1,6 +1,8 @@
 package com.viggad.trackingmoney.service.impl;
 
 import com.viggad.trackingmoney.dto.request.PurchaseRequest;
+import com.viggad.trackingmoney.dto.response.GetPurchaseResponse;
+import com.viggad.trackingmoney.dto.response.PurchaseResponse;
 import com.viggad.trackingmoney.exception.AccountNotFound;
 import com.viggad.trackingmoney.mapper.PurchaseMapper;
 import com.viggad.trackingmoney.model.Account;
@@ -12,8 +14,13 @@ import com.viggad.trackingmoney.repository.PurchaseRepository;
 import com.viggad.trackingmoney.service.inter.CloudinaryService;
 import com.viggad.trackingmoney.service.inter.PurchaseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -63,5 +70,38 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public String deletePurchase(Long purchaseId) {
         return "";
+    }
+
+    @Override
+    public GetPurchaseResponse getAllPurchases(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Purchase> purchasePage =
+                purchaseRepository.findAll(pageable);
+
+        List<PurchaseResponse> items =
+                purchasePage.getContent()
+                        .stream()
+                        .map(purchaseMapper::toPurchaseRequest)
+                        .toList();
+
+        return GetPurchaseResponse.builder()
+                .items(items)
+                .totalMoney(calculateTotalMoney(items))
+                .page(purchasePage.getNumber())
+                .size(purchasePage.getSize())
+                .totalPages(purchasePage.getTotalPages())
+                .totalItems(purchasePage.getTotalElements())
+                .build();
+    }
+
+
+    private double calculateTotalMoney(List<PurchaseResponse> list){
+        double total = 0;
+        for (PurchaseResponse x : list) {
+            total += x.getPrice();
+        }
+
+        return total;
     }
 }
