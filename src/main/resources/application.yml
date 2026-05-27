@@ -16,3 +16,6 @@ cloudinary:
   cloud_name: dq6ar6ytd
   api_key: 924796385639944
   api_secret: zF_5C8pZd3m-q2NXsp7Ay96glI0
+
+server:
+  address: 0.0.0.0

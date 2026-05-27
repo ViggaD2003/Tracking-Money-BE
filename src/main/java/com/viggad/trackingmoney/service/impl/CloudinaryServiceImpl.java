@@ -31,8 +31,13 @@ public class CloudinaryServiceImpl implements CloudinaryService {
     }
 
     @Override
-    public String deleteImage(String publicId) {
+    public String deleteImage(String imageUrl) {
         try {
+
+            String publicId = imageUrl.substring(
+                    imageUrl.lastIndexOf("/") + 1,
+                    imageUrl.lastIndexOf(".")
+            );
 
             Map result = cloudinary.uploader().destroy(
                     publicId,

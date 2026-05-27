@@ -11,4 +11,6 @@ public interface CategoryService {
     String createCategory(CategoryRequest categoryRequest);
 
     List<CategoryResponse> getAllCategories(Long accountId);
+
+
 }

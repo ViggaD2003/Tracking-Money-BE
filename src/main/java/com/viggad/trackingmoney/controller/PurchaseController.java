@@ -32,4 +32,9 @@ public class PurchaseController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePurchase(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(purchaseService.deletePurchase(id));
+    }
+
 }

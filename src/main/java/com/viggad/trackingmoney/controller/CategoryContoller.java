@@ -25,6 +25,4 @@ public class CategoryContoller {
     public ResponseEntity<String> createNewCategory(@RequestBody CategoryRequest categoryRequest) {
         return ResponseEntity.ok(categoryService.createCategory(categoryRequest));
     }
-
-
 }

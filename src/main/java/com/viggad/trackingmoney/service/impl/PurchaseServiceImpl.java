@@ -13,6 +13,7 @@ import com.viggad.trackingmoney.repository.CategoryRepository;
 import com.viggad.trackingmoney.repository.PurchaseRepository;
 import com.viggad.trackingmoney.service.inter.CloudinaryService;
 import com.viggad.trackingmoney.service.inter.PurchaseService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -68,8 +69,19 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
+    @Transactional
     public String deletePurchase(Long purchaseId) {
-        return "";
+        Purchase purchase = purchaseRepository.findById(purchaseId).orElseThrow(() -> new RuntimeException("Purchase not found"));
+
+        String result = cloudinaryService.deleteImage(purchase.getImageUrl());
+
+        if(result.equals("Delete image failed")){
+            throw new RuntimeException("Delete image failed");
+        }
+
+        purchaseRepository.delete(purchase);
+
+        return "Delete Successfully";
     }
 
     @Override
